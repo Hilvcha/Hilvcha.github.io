@@ -98,10 +98,10 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="http请求概览">
 <meta property="og:url" content="http://hilvcha.git.io/2017/07/29/http请求概览/index.html">
-<meta property="og:site_name" content="Hilvcha&#39;s Note">
+<meta property="og:site_name" content="Hilvcha&#39;s Notes">
 <meta property="og:description" content="HTTPhttp 是一套计算机通过网络进行通信的规则。它是无状态的协议，浏览器与服务器之间不需要建立持久链接。只要遵循request/response模型，之后就可以关闭连接">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-07-29T15:59:54.510Z">
+<meta property="og:updated_time" content="2017-07-29T17:04:17.427Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http请求概览">
 <meta name="twitter:description" content="HTTPhttp 是一套计算机通过网络进行通信的规则。它是无状态的协议，浏览器与服务器之间不需要建立持久链接。只要遵循request/response模型，之后就可以关闭连接">
@@ -138,7 +138,7 @@
 
 
 
-  <title>http请求概览 | Hilvcha's Note</title>
+  <title>http请求概览 | Hilvcha's Notes</title>
   
 
 
@@ -174,7 +174,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hilvcha's Note</span>
+        <span class="site-title">Hilvcha's Notes</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -276,7 +276,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hilvcha's Note">
+      <meta itemprop="name" content="Hilvcha's Notes">
     </span>
 
     
@@ -354,7 +354,7 @@
 
       
         <h1 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h1><p>http 是一套计算机通过网络进行通信的规则。它是无状态的协议，浏览器与服务器之间不需要建立持久链接。只要遵循request/response模型，之后就可以关闭连接<br><a id="more"></a></p>
-<h2 id="http通信机制"><a href="#http通信机制" class="headerlink" title="http通信机制"></a>http通信机制</h2><p>一次完整的通信要经过下列7步骤</p>
+<h2 id="http-通信机制"><a href="#http-通信机制" class="headerlink" title="http 通信机制"></a>http 通信机制</h2><p>一次完整的通信要经过下列7步骤</p>
 <ol>
 <li><p><strong>建立TCP连接</strong><br>http作为应用层协议，必须先通过低层协议TCP进行连接，通常端口80</p>
 </li>
@@ -371,7 +371,7 @@
 <li><p><strong>服务器关闭TCP</strong><br>通常关闭TCP，如果头信息加入connection:keep-alive,保持连接，节约了带宽。</p>
 </li>
 </ol>
-<h2 id="HTTP-请求格式"><a href="#HTTP-请求格式" class="headerlink" title="HTTP 请求格式"></a>HTTP 请求格式</h2><p>请求信息有三部分：</p>
+<h2 id="http-请求格式"><a href="#http-请求格式" class="headerlink" title="http 请求格式"></a>http 请求格式</h2><p>请求信息有三部分：</p>
 <ul>
 <li><strong>请求方法 URI 协议/版本</strong><br>对于GET/sample.jsp HTTP/1.1，GET为方法，/sample.jsp为URI，之后为协议和协议的版本<br>请求方法有7种：GET、POST、HEAD、OPTIONS、PUT、DELETE、TARCE<br><strong>GET</strong> 通过请求URI得到资源<br>默认的请求方法，日常用来提交表单数据，但表单数据只经过简单编码，存在QUERY_STRING环境变量中，作为URL的一部分发送过去。例如<code>http://127.0.0.1/login.jsp?Name=zhangshi&amp;Age=30&amp;Submit=%cc%E+%BD%BB</code>,所以数据量也不能太大。<br><strong>POST</strong> 添加新的内容<br>GET的替代方法，主要是大批量的数据，表单不作为请求的一部分而是标准数据，从标准输入流中获取。<br><strong>PUT</strong> 修改内容<br><strong>DELETE</strong> 删除内容<br><strong>CONNECT</strong> 代理传输（SSL）<br><strong>OPTIONS</strong> 询问可执行的方法<br><strong>PATCH</strong> 更改部分文档<br><strong>PROPFIND</strong> 查看属性<br><strong>MKCOL</strong> 创建集合<br><strong>COPY</strong> 拷贝<br><strong>MOVE</strong> 移动<br><strong>LOCK</strong>  加锁<br><strong>UNLOCK</strong>  解锁<br><strong>TRACE</strong>  远程诊断服务器<br><strong>HEAD</strong> 类似于GET，但无body信息，检查对象的存在。  </li>
 </ul>
@@ -382,7 +382,7 @@
 <li><p><strong>request content</strong><br>可以包含客户提交的查询字符串信息</p>
 </li>
 </ul>
-<h2 id="HTTP-响应"><a href="#HTTP-响应" class="headerlink" title="HTTP 响应"></a>HTTP 响应</h2><ul>
+<h2 id="http-响应"><a href="#http-响应" class="headerlink" title="http 响应"></a>http 响应</h2><ul>
 <li><strong>协议状态版本代码描述</strong><br>协议版本+数字。</li>
 <li>1XX-信息类（information），表示收到，进行相应的处理。  </li>
 <li>2XX-成功类（successful），正确接受，理解和处理。  </li>
@@ -581,7 +581,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP"><span class="nav-number">1.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#http通信机制"><span class="nav-number">1.1.</span> <span class="nav-text">http通信机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-请求格式"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP 请求格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-响应"><span class="nav-number">1.3.</span> <span class="nav-text">HTTP 响应</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP"><span class="nav-number">1.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#http-通信机制"><span class="nav-number">1.1.</span> <span class="nav-text">http 通信机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http-请求格式"><span class="nav-number">1.2.</span> <span class="nav-text">http 请求格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http-响应"><span class="nav-number">1.3.</span> <span class="nav-text">http 响应</span></a></li></ol></li></ol></div>
             
 
           </div>
