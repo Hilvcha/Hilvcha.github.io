@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT, Hilvcha, 王一杰, 博客" />
+  <meta name="keywords" content="函数式,Sicp,Lisp," />
 
 
 
@@ -93,13 +93,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hilvcha&#39;s Notes">
-<meta property="og:url" content="http://hilvcha.git.io/index.html">
+<meta name="description" content="程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。">
+<meta name="keywords" content="函数式,Sicp,Lisp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lec1a-Lisp概览">
+<meta property="og:url" content="http://hilvcha.git.io/2017/07/30/Lisp概览/index.html">
 <meta property="og:site_name" content="Hilvcha&#39;s Notes">
+<meta property="og:description" content="程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-07-30T16:05:28.100Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hilvcha&#39;s Notes">
+<meta name="twitter:title" content="Lec1a-Lisp概览">
+<meta name="twitter:description" content="程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。">
 
 
 
@@ -127,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://hilvcha.git.io/"/>
+  <link rel="canonical" href="http://hilvcha.git.io/2017/07/30/Lisp概览/"/>
 
 
 
 
 
-  <title>Hilvcha's Notes</title>
+  <title>Lec1a-Lisp概览 | Hilvcha's Notes</title>
   
 
 
@@ -158,9 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -253,9 +256,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -281,9 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/30/Lisp概览/" itemprop="url">Lec1a-Lisp概览</a></h1>
+          <h1 class="post-title" itemprop="name headline">Lec1a-Lisp概览</h1>
         
 
         <div class="post-meta">
@@ -352,188 +353,101 @@
       
 
       
+        <p>程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。<br><a id="more"></a></p>
+<h1 id="计算机科学研究的是一种大系统中控制复杂度的技术"><a href="#计算机科学研究的是一种大系统中控制复杂度的技术" class="headerlink" title="计算机科学研究的是一种大系统中控制复杂度的技术."></a><strong>计算机科学研究的是一种大系统中控制复杂度的技术.</strong></h1><p>这种复杂度不像其他现实工程中为了拟合现实带来的误差或者噪声。计算机工程通过大量数值计算等方面的研究可以看做设计的都是隔离于底层的理想化组件，可随意组合，无现实的约束。函数式可以比较显式地表达这种关系，而这种抽象的系统设计却是复杂所在。</p>
+<h2 id="黑盒抽象-black-box-abstraction"><a href="#黑盒抽象-black-box-abstraction" class="headerlink" title="黑盒抽象 black-box abstraction"></a>黑盒抽象 black-box abstraction</h2><ul>
+<li><p>primitive objects<br>  基本过程和基本数据</p>
+</li>
+<li><p>means of combination<br>  基本过程的组合和基本数据的组合</p>
+</li>
+<li><p>means of abstraction<br>  如何将过程抽象出来</p>
+</li>
+<li><p>capturing common patterns<br>  找到它的通用模式</p>
+</li>
+</ul>
+<h2 id="约定接口-conventional-interfaces"><a href="#约定接口-conventional-interfaces" class="headerlink" title="约定接口 conventional interfaces"></a>约定接口 conventional interfaces</h2><ul>
+<li><p>generic operations<br>  通用化来应对此类各种扩展</p>
+</li>
+<li><p>large-scale structure and modularity</p>
+<ul>
+<li>object-opiented programming<br>抽象出个体互相传递消息联系起来</li>
+<li>operations on aggregates<br>聚集的操作，称为流</li>
+</ul>
+</li>
+</ul>
+<h2 id="元语言抽象-metalinguistic-abstraction"><a href="#元语言抽象-metalinguistic-abstraction" class="headerlink" title="元语言抽象 metalinguistic abstraction"></a>元语言抽象 metalinguistic abstraction</h2><p>虽然编程语言通常是图灵完备的，但是设计意图都是为了强调系统的某个方面，它隐藏了一部分细节，却强调了另一部分，所以要设计新的语言。此时要设计出解释别的语言的程序，这也是一个输入输出的过程，但是因为输入的是需要理解的语言片段，他可能表达的不仅是一类数据，而是现实中无限的可能。为了能在简单的机器上应用并理解这些输入，需要通过有限的通用规则来处理输入的语言中的符号组合关系。<br>对于lisp，它可以神奇的只是循环的通过“应用”与“求值”完成解释自己的过程（自举）。</p>
+<h1 id="Lisp"><a href="#Lisp" class="headerlink" title="Lisp"></a>Lisp</h1><p>基本元素有哪些？</p>
+
+      
+    </div>
+
+    <div>
+      
         
-          <p>程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/30/Lisp概览/#more" rel="contents">
-              Weiterlesen &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
-      
-    </div>
-
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-tags " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://hilvcha.git.io/2017/07/29/http请求概览/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hilvcha">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hilvcha's Notes">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/29/http请求概览/" itemprop="url">http请求概览</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-29T22:39:06+08:00">
-                2017-07-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
-                    <span itemprop="name">计算机网络</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/函数式/" rel="tag"># 函数式</a>
           
-
+            <a href="/tags/Sicp/" rel="tag"># Sicp</a>
           
-            
+            <a href="/tags/Lisp/" rel="tag"># Lisp</a>
           
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <p>http 是一套计算机通过网络进行通信的规则。它是无状态的协议，浏览器与服务器之间不需要建立持久链接。只要遵循request/response模型，之后就可以关闭连接。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/29/http请求概览/#more" rel="contents">
-              Weiterlesen &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/29/http请求概览/" rel="next" title="http请求概览">
+                <i class="fa fa-chevron-left"></i> http请求概览
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -541,6 +455,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -561,8 +479,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -644,6 +571,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机科学研究的是一种大系统中控制复杂度的技术"><span class="nav-number">1.</span> <span class="nav-text">计算机科学研究的是一种大系统中控制复杂度的技术.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#黑盒抽象-black-box-abstraction"><span class="nav-number">1.1.</span> <span class="nav-text">黑盒抽象 black-box abstraction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约定接口-conventional-interfaces"><span class="nav-number">1.2.</span> <span class="nav-text">约定接口 conventional interfaces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元语言抽象-metalinguistic-abstraction"><span class="nav-number">1.3.</span> <span class="nav-text">元语言抽象 metalinguistic abstraction</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lisp"><span class="nav-number">2.</span> <span class="nav-text">Lisp</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -757,10 +700,10 @@
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 
