@@ -102,7 +102,7 @@
 <meta property="og:description" content="程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://hilvcha.git.io/2017/07/30/Lisp概览/sqrt.jpg">
-<meta property="og:updated_time" content="2017-08-01T02:18:20.836Z">
+<meta property="og:updated_time" content="2017-08-01T02:29:38.940Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lec1a-Lisp概览">
 <meta name="twitter:description" content="程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。">
@@ -206,7 +206,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -216,7 +216,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Categories
+            Kategorien
           </a>
         </li>
       
@@ -226,7 +226,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -296,7 +296,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-30T09:56:22+08:00">
                 2017-07-30
@@ -317,7 +317,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">in</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -408,7 +408,7 @@
 <figure class="highlight scheme"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">; 无参数</span></div><div class="line">(<span class="name"><span class="builtin-name">define</span></span> A (<span class="name"><span class="builtin-name">*</span></span> <span class="number">5</span> <span class="number">5</span>))</div><div class="line">(<span class="name"><span class="builtin-name">*</span></span> A A)</div><div class="line"><span class="comment">; 传入参数</span></div><div class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">rectangle</span> a b)</div><div class="line">    (<span class="name"><span class="builtin-name">*</span></span> a b))</div><div class="line">(<span class="name">rectangle</span> <span class="number">3</span> <span class="number">4</span>)</div><div class="line"><span class="comment">;lambda 为一个带有参数的过程</span></div><div class="line">(<span class="name"><span class="builtin-name">define</span></span> square (<span class="name"><span class="builtin-name">lambda</span></span> (x) (<span class="name"><span class="builtin-name">*</span></span> <span class="number">1</span> x)))</div></pre></td></tr></table></figure>
 <h2 id="一个关于sqrt的例子"><a href="#一个关于sqrt的例子" class="headerlink" title="一个关于sqrt的例子"></a>一个关于sqrt的例子</h2><h3 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h3><p>可将sqrt分解为以下按层级抽象的过程,其中try对自身递归定义</p>
 <p><img src="/2017/07/30/Lisp概览/sqrt.jpg" width="300" height="300"></p>
-<h3 id="lisp抽象定义的sqrt盒子"><a href="#lisp抽象定义的sqrt盒子" class="headerlink" title="lisp抽象定义的sqrt盒子"></a>lisp抽象定义的sqrt盒子</h3><figure class="highlight scheme"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name"><span class="builtin-name">sqrt</span></span> x)</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">improve</span> guess)</div><div class="line">        (<span class="name">average</span> guess (<span class="name"><span class="builtin-name">/</span></span> x guess)))</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">good-enough?</span> guess)</div><div class="line">        (<span class="name"><span class="builtin-name">&lt;</span></span> (<span class="name"><span class="builtin-name">abs</span></span> (<span class="name"><span class="builtin-name">-</span></span> (<span class="name">square</span> guess) x))</div><div class="line">            <span class="number">001</span>))</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">try</span> guess)</div><div class="line">        (<span class="name"><span class="builtin-name">if</span></span> (<span class="name">good-enough?</span> guess)</div><div class="line">            guess</div></pre></td></tr></table></figure>
+<h3 id="lisp抽象定义的sqrt盒子"><a href="#lisp抽象定义的sqrt盒子" class="headerlink" title="lisp抽象定义的sqrt盒子"></a>lisp抽象定义的sqrt盒子</h3><figure class="highlight scheme"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name"><span class="builtin-name">sqrt</span></span> x)</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">improve</span> guess)</div><div class="line">        (<span class="name">average</span> guess (<span class="name"><span class="builtin-name">/</span></span> x guess)))</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">good-enough?</span> guess)</div><div class="line">        (<span class="name"><span class="builtin-name">&lt;</span></span> (<span class="name"><span class="builtin-name">abs</span></span> (<span class="name"><span class="builtin-name">-</span></span> (<span class="name">square</span> guess) x))</div><div class="line">            <span class="number">001</span>))</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">try</span> guess)</div><div class="line">        (<span class="name"><span class="builtin-name">if</span></span> (<span class="name">good-enough?</span> guess)</div><div class="line">            guess</div><div class="line">            (<span class="name">try</span> (<span class="name">improve</span> guess))))</div><div class="line">    (<span class="name">try</span> <span class="number">1</span>))</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -513,10 +513,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -537,7 +537,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -548,7 +548,7 @@
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               </a>
             </div>
           
@@ -559,7 +559,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
                 <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -645,7 +645,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
