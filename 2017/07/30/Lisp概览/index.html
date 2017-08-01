@@ -101,10 +101,12 @@
 <meta property="og:site_name" content="Hilvcha&#39;s Notes">
 <meta property="og:description" content="程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-07-30T16:05:28.100Z">
+<meta property="og:image" content="http://hilvcha.git.io/2017/07/30/Lisp概览/sqrt.jpg">
+<meta property="og:updated_time" content="2017-08-01T02:14:23.151Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lec1a-Lisp概览">
 <meta name="twitter:description" content="程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。">
+<meta name="twitter:image" content="http://hilvcha.git.io/2017/07/30/Lisp概览/sqrt.jpg">
 
 
 
@@ -375,8 +377,37 @@
 </ul>
 </li>
 </ul>
-<h2 id="元语言抽象-metalinguistic-abstraction"><a href="#元语言抽象-metalinguistic-abstraction" class="headerlink" title="元语言抽象 metalinguistic abstraction"></a>元语言抽象 metalinguistic abstraction</h2><p>虽然编程语言通常是图灵完备的，但是设计意图都是为了强调系统的某个方面，它隐藏了一部分细节，却强调了另一部分，所以要设计新的语言。此时要设计出解释别的语言的程序，这也是一个输入输出的过程，但是因为输入的是需要理解的语言片段，他可能表达的不仅是一类数据，而是现实中无限的可能。为了能在简单的机器上应用并理解这些输入，需要通过有限的通用规则来处理输入的语言中的符号组合关系。<br>对于lisp，它可以神奇的只是循环的通过“应用”与“求值”完成解释自己的过程（自举）。</p>
-<h1 id="Lisp"><a href="#Lisp" class="headerlink" title="Lisp"></a>Lisp</h1><p>基本元素有哪些？</p>
+<h2 id="元语言抽象-metalinguistic-abstraction"><a href="#元语言抽象-metalinguistic-abstraction" class="headerlink" title="元语言抽象 metalinguistic abstraction"></a>元语言抽象 metalinguistic abstraction</h2><p>虽然编程语言通常是图灵完备的，但是设计意图都是为了强调系统的某个方面，它隐藏了一部分细节，却强调了另一部分，所以要设计新的语言。此时要设计出解释别的语言的程序，这也是一个输入输出的过程，但是因为输入的是需要理解的语言片段，他可能表达的不仅是一类数据，而是现实中无限的可能。为了能在简单的机器上应用并理解这些输入，需要通过有限的通用规则来处理输入的语言中的符号组合关系。<br>对于lisp，它可以神奇的只是循环的通过“应用”(apply)与“求值”(eval)完成解释自己的过程（自举）。</p>
+<h1 id="Lisp"><a href="#Lisp" class="headerlink" title="Lisp"></a>Lisp</h1><h2 id="用于抽象的语法设施"><a href="#用于抽象的语法设施" class="headerlink" title="用于抽象的语法设施"></a>用于抽象的语法设施</h2><p>lisp应用前缀表示法，将操作符与操作数（基本对象）依次放入括号，称为组合式（基本过程）。组合式作为基本过程可以成为新的操作数进行组合。这个线性字符串最终可看成一个树状结构。</p>
+<table>
+<thead>
+<tr>
+<th>box-abstraction</th>
+<th>procedures</th>
+<th>data     </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> primitive elements</td>
+<td>+ * &lt; =</td>
+<td>23 1.735 </td>
+</tr>
+<tr>
+<td> means of combination</td>
+<td>( ) combination<br> cond<br> if</td>
+<td></td>
+</tr>
+<tr>
+<td> means of abstraction</td>
+<td>define</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">; 无参数</span></div><div class="line">(<span class="name"><span class="builtin-name">define</span></span> A (<span class="name"><span class="builtin-name">*</span></span> <span class="number">5</span> <span class="number">5</span>))</div><div class="line">(<span class="name"><span class="builtin-name">*</span></span> A A)</div><div class="line"><span class="comment">; 传入参数</span></div><div class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">rectangle</span> a b)</div><div class="line">    (<span class="name"><span class="builtin-name">*</span></span> a b))</div><div class="line">(<span class="name">rectangle</span> <span class="number">3</span> <span class="number">4</span>)</div><div class="line"><span class="comment">;lambda 为一个带有参数的过程</span></div><div class="line">(<span class="name"><span class="builtin-name">define</span></span> square (<span class="name"><span class="builtin-name">lambda</span></span> (x) (<span class="name"><span class="builtin-name">*</span></span> <span class="number">1</span> x)))</div></pre></td></tr></table></figure>
+<h2 id="一个关于sqrt的例子"><a href="#一个关于sqrt的例子" class="headerlink" title="一个关于sqrt的例子"></a>一个关于sqrt的例子</h2><h3 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h3><p>可将sqrt分解为以下按层级抽象的过程,其中try对自身递归定义</p>
+<p><img src="/2017/07/30/Lisp概览/sqrt.jpg" width="300" height="300"></p>
+<h3 id="lisp抽象定义的sqrt盒子"><a href="#lisp抽象定义的sqrt盒子" class="headerlink" title="lisp抽象定义的sqrt盒子"></a>lisp抽象定义的sqrt盒子</h3><figure class="highlight scheme"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name"><span class="builtin-name">sqrt</span></span> x)</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">improve</span> guess)</div><div class="line">        (<span class="name">average</span> guess (<span class="name"><span class="builtin-name">/</span></span> x guess)))</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">good-enough?</span> guess)</div><div class="line">        (<span class="name"><span class="builtin-name">&lt;</span></span> (<span class="name"><span class="builtin-name">abs</span></span> (<span class="name"><span class="builtin-name">-</span></span> (<span class="name">square</span> guess) x))</div><div class="line">            <span class="number">001</span>))</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">try</span> guess)</div><div class="line">        (<span class="name"><span class="builtin-name">if</span></span> (<span class="name">good-enough?</span> guess)</div><div class="line">            guess</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -432,6 +463,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/01/1/" rel="prev" title="1">
+                1 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -504,7 +539,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -581,7 +616,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机科学研究的是一种大系统中控制复杂度的技术"><span class="nav-number">1.</span> <span class="nav-text">计算机科学研究的是一种大系统中控制复杂度的技术.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#黑盒抽象-black-box-abstraction"><span class="nav-number">1.1.</span> <span class="nav-text">黑盒抽象 black-box abstraction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约定接口-conventional-interfaces"><span class="nav-number">1.2.</span> <span class="nav-text">约定接口 conventional interfaces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元语言抽象-metalinguistic-abstraction"><span class="nav-number">1.3.</span> <span class="nav-text">元语言抽象 metalinguistic abstraction</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lisp"><span class="nav-number">2.</span> <span class="nav-text">Lisp</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机科学研究的是一种大系统中控制复杂度的技术"><span class="nav-number">1.</span> <span class="nav-text">计算机科学研究的是一种大系统中控制复杂度的技术.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#黑盒抽象-black-box-abstraction"><span class="nav-number">1.1.</span> <span class="nav-text">黑盒抽象 black-box abstraction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约定接口-conventional-interfaces"><span class="nav-number">1.2.</span> <span class="nav-text">约定接口 conventional interfaces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元语言抽象-metalinguistic-abstraction"><span class="nav-number">1.3.</span> <span class="nav-text">元语言抽象 metalinguistic abstraction</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lisp"><span class="nav-number">2.</span> <span class="nav-text">Lisp</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用于抽象的语法设施"><span class="nav-number">2.1.</span> <span class="nav-text">用于抽象的语法设施</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个关于sqrt的例子"><span class="nav-number">2.2.</span> <span class="nav-text">一个关于sqrt的例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构图"><span class="nav-number">2.2.1.</span> <span class="nav-text">结构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lisp抽象定义的sqrt盒子"><span class="nav-number">2.2.2.</span> <span class="nav-text">lisp抽象定义的sqrt盒子</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
