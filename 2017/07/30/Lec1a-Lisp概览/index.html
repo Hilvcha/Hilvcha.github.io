@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="函数式,Sicp,Lisp," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。">
+<meta name="keywords" content="函数式,Sicp,Lisp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lec1a-Lisp概览">
+<meta property="og:url" content="http://hilvcha.git.io/2017/07/30/Lec1a-Lisp概览/index.html">
+<meta property="og:site_name" content="Hilvcha&#39;s Notes">
+<meta property="og:description" content="程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://hilvcha.git.io/2017/07/30/Lec1a-Lisp概览/sqrt.jpg">
+<meta property="og:updated_time" content="2017-08-11T12:53:41.929Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lec1a-Lisp概览">
+<meta name="twitter:description" content="程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。">
+<meta name="twitter:image" content="http://hilvcha.git.io/2017/07/30/Lec1a-Lisp概览/sqrt.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hilvcha.git.io/2017/07/30/Lec1a-Lisp概览/"/>
+
+
+
+
+
+  <title>Lec1a-Lisp概览 | Hilvcha's Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hilvcha's Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://hilvcha.git.io/2017/07/30/Lec1a-Lisp概览/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hilvcha">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hilvcha's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Lec1a-Lisp概览</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-30T09:56:22+08:00">
+                2017-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Sicp/" itemprop="url" rel="index">
+                    <span itemprop="name">Sicp</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>程序很像一个黑箱，应用一些规则处理数据得到输出。这在数学上来讲就是一个函数。可是耦合的关系使它们不能像数学函数那样灵活组合，而函数式的特性使得它放宽现实中程序的限制，输入的可以是另一个程序（函数），而它本身也可以作为数据传入其他函数，从而像数学中应用的形式化方法一样，更好的抽象滴描述这个世界。<br><a id="more"></a></p>
+<h1 id="计算机科学研究的是一种大系统中控制复杂度的技术"><a href="#计算机科学研究的是一种大系统中控制复杂度的技术" class="headerlink" title="计算机科学研究的是一种大系统中控制复杂度的技术."></a><strong>计算机科学研究的是一种大系统中控制复杂度的技术.</strong></h1><p>这种复杂度不像其他现实工程中为了拟合现实带来的误差或者噪声。计算机工程通过大量数值计算等方面的研究可以看做设计的都是隔离于底层的理想化组件，可随意组合，无现实的约束。函数式可以比较显式地表达这种关系，而这种抽象的系统设计却是复杂所在。</p>
+<h2 id="黑盒抽象-black-box-abstraction"><a href="#黑盒抽象-black-box-abstraction" class="headerlink" title="黑盒抽象 black-box abstraction"></a>黑盒抽象 black-box abstraction</h2><ul>
+<li><p>primitive objects<br>  基本过程和基本数据</p>
+</li>
+<li><p>means of combination<br>  基本过程的组合和基本数据的组合</p>
+</li>
+<li><p>means of abstraction<br>  如何将过程抽象出来</p>
+</li>
+<li><p>capturing common patterns<br>  找到它的通用模式</p>
+</li>
+</ul>
+<h2 id="约定接口-conventional-interfaces"><a href="#约定接口-conventional-interfaces" class="headerlink" title="约定接口 conventional interfaces"></a>约定接口 conventional interfaces</h2><ul>
+<li><p>generic operations<br>  通用化来应对此类各种扩展</p>
+</li>
+<li><p>large-scale structure and modularity</p>
+<ul>
+<li>object-opiented programming<br>抽象出个体互相传递消息联系起来</li>
+<li>operations on aggregates<br>聚集的操作，称为流</li>
+</ul>
+</li>
+</ul>
+<h2 id="元语言抽象-metalinguistic-abstraction"><a href="#元语言抽象-metalinguistic-abstraction" class="headerlink" title="元语言抽象 metalinguistic abstraction"></a>元语言抽象 metalinguistic abstraction</h2><p>虽然编程语言通常是图灵完备的，但是设计意图都是为了强调系统的某个方面，它隐藏了一部分细节，却强调了另一部分，所以要设计新的语言。此时要设计出解释别的语言的程序，这也是一个输入输出的过程，但是因为输入的是需要理解的语言片段，他可能表达的不仅是一类数据，而是现实中无限的可能。为了能在简单的机器上应用并理解这些输入，需要通过有限的通用规则来处理输入的语言中的符号组合关系。<br>对于lisp，它可以神奇的只是循环的通过“应用”(apply)与“求值”(eval)完成解释自己的过程（自举）。</p>
+<h1 id="Lisp"><a href="#Lisp" class="headerlink" title="Lisp"></a>Lisp</h1><h2 id="用于抽象的语法设施"><a href="#用于抽象的语法设施" class="headerlink" title="用于抽象的语法设施"></a>用于抽象的语法设施</h2><p>lisp应用前缀表示法，将操作符与操作数（基本对象）依次放入括号，称为组合式（基本过程）。组合式作为基本过程可以成为新的操作数进行组合。这个线性字符串最终可看成一个树状结构。</p>
+<table>
+<thead>
+<tr>
+<th>box-abstraction</th>
+<th>procedures</th>
+<th>data     </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> primitive elements</td>
+<td>+ * &lt; =</td>
+<td>23 1.735 </td>
+</tr>
+<tr>
+<td> means of combination</td>
+<td>( ) combination<br> cond<br> if</td>
+<td></td>
+</tr>
+<tr>
+<td> means of abstraction</td>
+<td>define</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">; 无参数</span></div><div class="line">(<span class="name"><span class="builtin-name">define</span></span> A (<span class="name"><span class="builtin-name">*</span></span> <span class="number">5</span> <span class="number">5</span>))</div><div class="line">(<span class="name"><span class="builtin-name">*</span></span> A A)</div><div class="line"><span class="comment">; 传入参数</span></div><div class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">rectangle</span> a b)</div><div class="line">    (<span class="name"><span class="builtin-name">*</span></span> a b))</div><div class="line">(<span class="name">rectangle</span> <span class="number">3</span> <span class="number">4</span>)</div><div class="line"><span class="comment">;lambda 为一个带有参数的过程</span></div><div class="line">(<span class="name"><span class="builtin-name">define</span></span> square (<span class="name"><span class="builtin-name">lambda</span></span> (x) (<span class="name"><span class="builtin-name">*</span></span> <span class="number">1</span> x)))</div></pre></td></tr></table></figure>
+<h2 id="一个关于sqrt的例子"><a href="#一个关于sqrt的例子" class="headerlink" title="一个关于sqrt的例子"></a>一个关于sqrt的例子</h2><h3 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h3><p>可将sqrt分解为以下按层级抽象的过程,其中try对自身递归定义</p>
+<p><img src="/2017/07/30/Lec1a-Lisp概览/sqrt.jpg" width="300" height="300"></p>
+<h3 id="lisp抽象定义的sqrt盒子"><a href="#lisp抽象定义的sqrt盒子" class="headerlink" title="lisp抽象定义的sqrt盒子"></a>lisp抽象定义的sqrt盒子</h3><figure class="highlight scheme"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name"><span class="builtin-name">sqrt</span></span> x)</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">improve</span> guess)</div><div class="line">        (<span class="name">average</span> guess (<span class="name"><span class="builtin-name">/</span></span> x guess)))</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">good-enough?</span> guess)</div><div class="line">        (<span class="name"><span class="builtin-name">&lt;</span></span> (<span class="name"><span class="builtin-name">abs</span></span> (<span class="name"><span class="builtin-name">-</span></span> (<span class="name">square</span> guess) x))</div><div class="line">            <span class="number">001</span>))</div><div class="line">    (<span class="name"><span class="builtin-name">define</span></span> (<span class="name">try</span> guess)</div><div class="line">        (<span class="name"><span class="builtin-name">if</span></span> (<span class="name">good-enough?</span> guess)</div><div class="line">            guess</div><div class="line">            (<span class="name">try</span> (<span class="name">improve</span> guess))))</div><div class="line">    (<span class="name">try</span> <span class="number">1</span>))</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/函数式/" rel="tag"># 函数式</a>
+          
+            <a href="/tags/Sicp/" rel="tag"># Sicp</a>
+          
+            <a href="/tags/Lisp/" rel="tag"># Lisp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/29/http请求概览/" rel="next" title="http请求概览">
+                <i class="fa fa-chevron-left"></i> http请求概览
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/01/Lec1b-计算过程/" rel="prev" title="Lec1b-计算过程">
+                Lec1b-计算过程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Hilvcha" />
+          <p class="site-author-name" itemprop="name">Hilvcha</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+           
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">Kategorien</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hilvcha" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/hilvcha" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机科学研究的是一种大系统中控制复杂度的技术"><span class="nav-number">1.</span> <span class="nav-text">计算机科学研究的是一种大系统中控制复杂度的技术.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#黑盒抽象-black-box-abstraction"><span class="nav-number">1.1.</span> <span class="nav-text">黑盒抽象 black-box abstraction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约定接口-conventional-interfaces"><span class="nav-number">1.2.</span> <span class="nav-text">约定接口 conventional interfaces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元语言抽象-metalinguistic-abstraction"><span class="nav-number">1.3.</span> <span class="nav-text">元语言抽象 metalinguistic abstraction</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lisp"><span class="nav-number">2.</span> <span class="nav-text">Lisp</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用于抽象的语法设施"><span class="nav-number">2.1.</span> <span class="nav-text">用于抽象的语法设施</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个关于sqrt的例子"><span class="nav-number">2.2.</span> <span class="nav-text">一个关于sqrt的例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构图"><span class="nav-number">2.2.1.</span> <span class="nav-text">结构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lisp抽象定义的sqrt盒子"><span class="nav-number">2.2.2.</span> <span class="nav-text">lisp抽象定义的sqrt盒子</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hilvcha</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
