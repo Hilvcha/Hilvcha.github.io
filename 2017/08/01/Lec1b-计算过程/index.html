@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT, Hilvcha, 王一杰, 博客" />
+  <meta name="keywords" content="函数式,Sicp,Lisp,递归,迭代," />
 
 
 
@@ -94,13 +94,14 @@
 
 
 <meta name="description" content="Locke 在 An Essay Concerning Human Understanding(1690) 中将人类的心智活动归为三种表现：  将几种简单的认识组合为一种复合认识，从而产生复杂的认识  将两种认识进行对比，无论简单或复杂。不将他们合二为一，从而得到对于他们相互联系的认识。  将有关认识与那些在实际中和它相伴的其他认识隔离开来，得到普遍的认识。此乃抽象。">
+<meta name="keywords" content="函数式,Sicp,Lisp,递归,迭代">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lec1b-计算过程">
 <meta property="og:url" content="http://hilvcha.git.io/2017/08/01/Lec1b-计算过程/index.html">
 <meta property="og:site_name" content="Hilvcha&#39;s Notes">
 <meta property="og:description" content="Locke 在 An Essay Concerning Human Understanding(1690) 中将人类的心智活动归为三种表现：  将几种简单的认识组合为一种复合认识，从而产生复杂的认识  将两种认识进行对比，无论简单或复杂。不将他们合二为一，从而得到对于他们相互联系的认识。  将有关认识与那些在实际中和它相伴的其他认识隔离开来，得到普遍的认识。此乃抽象。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-01T12:48:12.328Z">
+<meta property="og:updated_time" content="2017-08-11T12:38:01.653Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lec1b-计算过程">
 <meta name="twitter:description" content="Locke 在 An Essay Concerning Human Understanding(1690) 中将人类的心智活动归为三种表现：  将几种简单的认识组合为一种复合认识，从而产生复杂的认识  将两种认识进行对比，无论简单或复杂。不将他们合二为一，从而得到对于他们相互联系的认识。  将有关认识与那些在实际中和它相伴的其他认识隔离开来，得到普遍的认识。此乃抽象。">
@@ -359,11 +360,17 @@
 <li><p>将两种认识进行对比，无论简单或复杂。不将他们合二为一，从而得到对于他们相互联系的认识。</p>
 </li>
 <li><p>将有关认识与那些在实际中和它相伴的其他认识隔离开来，得到普遍的认识。此乃抽象。</p>
-<a id="more"></a>
 </li>
 </ul>
-<p>理解计算机对特定过程-&gt;特定模式使用的工程模型<br>kinds of expressions<br>numbers<br>symbols<br>lambda-expressions<br>definitions<br>conditionals<br>combinations<br>表达式求值规则 不断进行代换 归约 计算机自顶向下由繁杂的抽象层次组成，要学会忽略细节。<strong>避免不必要的观察 计算和思考</strong></p>
-
+<a id="more"></a>
+<p>理解计算机对特定过程-&gt;特定模式使用的工程模型  </p>
+<h2 id="kinds-of-expressions"><a href="#kinds-of-expressions" class="headerlink" title="kinds of expressions"></a>kinds of expressions</h2><p>numbers<br>symbols<br>lambda-expressions<br>definitions<br>conditionals<br>combinations  </p>
+<h2 id="表达式求值规则"><a href="#表达式求值规则" class="headerlink" title="表达式求值规则"></a>表达式求值规则</h2><p>不断进行代换，归约。计算机自顶向下由繁杂的抽象层次组成，要学会忽略细节。<strong>避免不必要的观察 计算和思考</strong> 关注一层层的抽象，分析时按层次进行归约向上。但是计算机实际运行顺序可能不同。</p>
+<h2 id="迭代与抽象"><a href="#迭代与抽象" class="headerlink" title="迭代与抽象"></a>迭代与抽象</h2><figure class="highlight scheme"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name"><span class="builtin-name">+</span></span> x y)</div><div class="line">    (<span class="name"><span class="builtin-name">if</span></span> (<span class="name"><span class="builtin-name">=</span></span> x <span class="number">0</span>)</div><div class="line">        y</div><div class="line">        (<span class="name"><span class="builtin-name">+</span></span> (<span class="name">-1+</span> x) (<span class="name">1+</span> y)))) </div><div class="line"><span class="comment">;递归形式的迭代</span></div><div class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name"><span class="builtin-name">+</span></span> x y)</div><div class="line">    (<span class="name"><span class="builtin-name">if</span></span> (<span class="name"><span class="builtin-name">=</span></span> x <span class="number">0</span>)</div><div class="line">        y</div><div class="line">        (<span class="name">1+</span> (<span class="name"><span class="builtin-name">+</span></span> (<span class="name">-1+</span> x) y))))         </div><div class="line"><span class="comment">;本质的递归，空间复杂度高，最后要计算每层返回的1</span></div></pre></td></tr></table></figure>
+<p><strong>迭代</strong>就像是操场永不回头的跑圈，不断利用<strong>相同的优化过程</strong>将输出作为新的输入，使问题推进到一个个里程碑，直到符合答案的要求。它可以仅用400m的长度去完成42km马拉松的赛程规模的问题，同时它的空间复杂度仅仅只在于过程的大小（一圈的长度），是常数级。</p>
+<p><strong>递归</strong>则像是一棵可以回溯的树，不断使用一种计算过程得到部分解直到到达底部的边界条件，此时的空间复杂度最高，为树的深度。再将边界的解与每层的解结合回溯到根节点，起点同时也是终点。整体的计算是一个展开再收缩的过程。</p>
+<p>以汉诺塔为例，分解出依次移动底部盘子的过程。</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">move</span> N from to space)</div><div class="line">        (<span class="name"><span class="builtin-name">cond</span></span> ((<span class="name"><span class="builtin-name">=</span></span> N <span class="number">0</span>) <span class="string">"done"</span>)</div><div class="line">              (<span class="name"><span class="builtin-name">else</span></span> (<span class="name">move</span> (<span class="name">-1+</span> N) from space to)</div><div class="line">                    (<span class="name">print-move</span> from to)</div><div class="line">                    (<span class="name">move</span> (<span class="name">-1+</span> N) space to from))))</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -389,6 +396,20 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/函数式/" rel="tag"># 函数式</a>
+          
+            <a href="/tags/Sicp/" rel="tag"># Sicp</a>
+          
+            <a href="/tags/Lisp/" rel="tag"># Lisp</a>
+          
+            <a href="/tags/递归/" rel="tag"># 递归</a>
+          
+            <a href="/tags/迭代/" rel="tag"># 迭代</a>
+          
+        </div>
       
 
       
@@ -455,8 +476,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -493,7 +523,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">Tags</span>
               </a>
             </div>
@@ -538,6 +568,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#kinds-of-expressions"><span class="nav-number">1.</span> <span class="nav-text">kinds of expressions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表达式求值规则"><span class="nav-number">2.</span> <span class="nav-text">表达式求值规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代与抽象"><span class="nav-number">3.</span> <span class="nav-text">迭代与抽象</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
