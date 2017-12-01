@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT, Hilvcha, 王一杰, 博客" />
+  <meta name="keywords" content="c++,IO," />
 
 
 
@@ -93,13 +93,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hilvcha&#39;s Notes">
-<meta property="og:url" content="http://hilvcha.git.io/archives/2017/08/index.html">
+<meta name="description" content="istream ifstream istringstreamostream ofstream ostringstream   iostate_type: badbit(崩溃) failbit(单次失败) eofbit(结束) goodbit(安全)   judge_state: s.eof() s.fail() s.bad() s.good() s.clear()(复位所有) s.(flags)(">
+<meta name="keywords" content="c++,IO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++8-IO库">
+<meta property="og:url" content="http://hilvcha.git.io/2017/11/25/test/index.html">
 <meta property="og:site_name" content="Hilvcha&#39;s Notes">
+<meta property="og:description" content="istream ifstream istringstreamostream ofstream ostringstream   iostate_type: badbit(崩溃) failbit(单次失败) eofbit(结束) goodbit(安全)   judge_state: s.eof() s.fail() s.bad() s.good() s.clear()(复位所有) s.(flags)(">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-12-01T14:14:17.150Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hilvcha&#39;s Notes">
+<meta name="twitter:title" content="C++8-IO库">
+<meta name="twitter:description" content="istream ifstream istringstreamostream ofstream ostringstream   iostate_type: badbit(崩溃) failbit(单次失败) eofbit(结束) goodbit(安全)   judge_state: s.eof() s.fail() s.bad() s.good() s.clear()(复位所有) s.(flags)(">
 
 
 
@@ -127,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://hilvcha.git.io/archives/2017/08/"/>
+  <link rel="canonical" href="http://hilvcha.git.io/2017/11/25/test/"/>
 
 
 
 
 
-  <title>Archiv | Hilvcha's Notes</title>
+  <title>C++8-IO库 | Hilvcha's Notes</title>
   
 
 
@@ -158,7 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,103 +257,175 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      Öhm..! Insgesamt 6 Artikel. Bleib dran.
-    </span>
-
+  <div id="posts" class="posts-expand">
     
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/11/Lec2a-高阶过程/" itemprop="url">
-              
-                <span itemprop="name">Lec2a-高阶过程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-11T20:49:22+08:00"
-              content="2017-08-11" >
-          08-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/01/Lec1b-计算过程/" itemprop="url">
-              
-                <span itemprop="name">Lec1b-计算过程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-01T20:07:58+08:00"
-              content="2017-08-01" >
-          08-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://hilvcha.git.io/2017/11/25/test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hilvcha">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hilvcha's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++8-IO库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-25T20:17:44+08:00">
+                2017-11-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c-primer5th/" itemprop="url" rel="index">
+                    <span itemprop="name">c++primer5th</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>istream ifstream istringstream<br>ostream ofstream ostringstream  </p>
+<p>iostate_type: badbit(崩溃) failbit(单次失败) eofbit(结束) goodbit(安全)  </p>
+<p>judge_state: s.eof() s.fail() s.bad() s.good() s.clear()(复位所有) s.(flags)(只复位flag) s.setstate(flags) s.rdstate()(当前状态)  </p>
+<a id="more"></a>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</div><div class="line"><span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="number">0</span>);<span class="comment">//返回原来绑的那个输出流。</span></div><div class="line"><span class="function">istream &amp; <span class="title">test</span><span class="params">(istream &amp; in)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> num;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		<span class="keyword">while</span> (in &gt;&gt; num, !in.eof()) &#123;</div><div class="line">			<span class="keyword">if</span> (in.bad()) &#123;</div><div class="line">				<span class="keyword">throw</span> runtime_error(<span class="string">"输入流崩啦"</span>)</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (in.fail()) &#123;</div><div class="line">				<span class="built_in">cout</span></div><div class="line">				in.clear();<span class="comment">//仅仅将状态复位，流中依然有错误的值。</span></div><div class="line">				in.ignore(<span class="number">1000</span>, <span class="string">'\n'</span>);</div><div class="line">				<span class="keyword">continue</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//处理这个数字。</span></div><div class="line">			<span class="built_in">cout</span> &lt;&lt; num &lt;&lt; ends;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (runtime_error err) &#123;</div><div class="line">		<span class="comment">//do something.</span></div><div class="line">	&#125;</div><div class="line">	in.clear();</div><div class="line">	<span class="keyword">return</span> in;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c/" rel="tag"># c++</a>
+          
+            <a href="/tags/IO/" rel="tag"># IO</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/07/python/" rel="next" title="python">
+                <i class="fa fa-chevron-left"></i> python
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -356,6 +433,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -572,11 +653,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
 
 
   
